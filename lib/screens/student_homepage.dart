@@ -9,6 +9,7 @@ import 'package:online_classroom/data/custom_user.dart';
 import 'package:online_classroom/services/classes_db.dart';
 import 'package:online_classroom/services/updatealldata.dart';
 import 'package:provider/provider.dart';
+import 'teacher_classroom/calender_tab.dart';
 
 class StudentHomePage extends StatefulWidget {
   @override
@@ -78,6 +79,10 @@ class _StudentHomePageState extends State<StudentHomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Classes",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Calender",
             )
           ],
           currentIndex: _selectedIndex,

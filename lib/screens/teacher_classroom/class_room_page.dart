@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_classroom/screens/teacher_classroom/people_tab.dart';
 import 'package:online_classroom/screens/teacher_classroom/announcement_crud/add_announcement.dart';
-
+import '../teacher_classroom/calender_tab.dart';
 import '../teacher_classroom/classwork_tab.dart';
 import '../teacher_classroom/stream_tab.dart';
 import 'package:online_classroom/data/classrooms.dart';
@@ -36,48 +36,59 @@ class _ClassRoomPageState extends State<ClassRoomPage> {
       PeopleTab(
           classRoom: widget.classRoom,
           uiColor: widget.uiColor
+      ),
+      CalendarTab(
       )
     ];
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: widget.uiColor,
-        elevation: 0.5,
-        title: Text(
-          widget.classRoom.className,
-          style: TextStyle(
-              color: Colors.white, fontFamily: "Roboto", fontSize: 22),
+  appBar: AppBar(
+    backgroundColor: widget.uiColor,
+    elevation: 0.5,
+    title: Text(
+      widget.classRoom.className,
+      style: TextStyle(
+        color: Colors.white,
+        fontFamily: "Roboto",
+        fontSize: 22,
+      ),
+    ),
+    actions: [
+      IconButton(
+        icon: Icon(
+          Icons.more_vert,
+          color: Colors.white,
+          size: 27,
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.white,
-              size: 26,
-            ),
-            onPressed: () {},
-          )
-        ],
+        onPressed: () {},
+      )
+    ],
+  ),
+  body: tabs[_selectedIndex],
+  bottomNavigationBar: BottomNavigationBar(
+    items: const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.chat),
+        label: "Stream",
       ),
-      body: tabs[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: "Stream",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Classwork',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'People',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: widget.uiColor,
-        onTap: _onItemTapped,
+      BottomNavigationBarItem(
+        icon: Icon(Icons.book),
+        label: 'Classwork',
       ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.people),
+        label: 'People',
+      ),
+      BottomNavigationBarItem(
+        // Tambahkan tab untuk Kalender
+        icon: Icon(Icons.calendar_today),
+        label: 'Calendar',
+      ),
+    ],
+    currentIndex: _selectedIndex,
+    selectedItemColor: widget.uiColor,
+    unselectedItemColor: Colors.grey,
+    onTap: _onItemTapped,
+  ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(

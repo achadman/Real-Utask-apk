@@ -15,8 +15,8 @@ class _AddClassState extends State<AddClass> {
 
   String className = "";
   String description = "";
-  Color uiColor = Colors.blue;
-  Color _tempShadeColor = Colors.blue;
+  Color uiColor = const Color.fromARGB(255, 153, 155, 154);
+  Color _tempShadeColor = const Color.fromARGB(255, 153, 155, 154);
 
   // for form validation
   final _formKey = GlobalKey<FormState>();
@@ -65,7 +65,7 @@ class _AddClassState extends State<AddClass> {
     return Scaffold(
       // appbar part
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: const Color.fromARGB(255, 147, 191, 253),
           elevation: 0.5,
           title: Text(
             "Add Class",
@@ -161,7 +161,7 @@ class _AddClassState extends State<AddClass> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor:const Color.fromARGB(255, 147, 191, 253),
                         minimumSize: Size(150, 50),
                       ),
                     )

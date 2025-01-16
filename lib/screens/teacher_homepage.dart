@@ -55,7 +55,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                 builder: (context) => AddClass(),
               )).then((_) => setState(() {}));
         },
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color.fromARGB(255, 147, 191, 253),
         child: Icon(
           Icons.add,
           color: Colors.white,

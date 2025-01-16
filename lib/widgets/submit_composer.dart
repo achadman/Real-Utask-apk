@@ -97,43 +97,12 @@ class _SubmissionComposerState extends State<SubmissionComposer> {
           height: 2,
           color: widget.uiColor,
         ),
-        Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Text(
-              "Your Work",
-              style: TextStyle(
-                  fontSize: 15, color: Colors.black, letterSpacing: 1, fontWeight: FontWeight.bold
-              ),
-            )
-        ),
+       
         if(attachments.length > 0) Padding(
             padding: EdgeInsets.all(20),
             child: AttachmentEditorComposer(attachmentList: attachments, isTeacher: false, title: widget.assignment.title, className: widget.assignment.classroom.className)
         ),
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: OutlinedButton(
-                onPressed: () {
-                  addFile(account!.email as String, widget.assignment.classroom.className);
-                  setState(() => {});
-                },
-                child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Add Attachment",
-                              style: TextStyle(color: Colors.black87, fontSize: 14)),
-                          Icon(
-                            Icons.add_circle_outline_outlined,
-                            color: widget.assignment.classroom.uiColor,
-                            size: 32,
-                          )
-                        ]
-                    )
-                )
-            ),
-        ),
+        
         Padding(
           padding: EdgeInsets.all(20),
           child: MaterialButton(

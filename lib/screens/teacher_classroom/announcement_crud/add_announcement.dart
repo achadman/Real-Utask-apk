@@ -184,39 +184,11 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                   ),
 
                   SizedBox(height: 10.0),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(top: 15, bottom: 10),
-                      child: Text(
-                        "Attachments:",
-                        style: TextStyle(
-                            fontSize: 15, color: Colors.black, letterSpacing: 1, fontWeight: FontWeight.bold),
-                      )
-                  ),
+                  
                   if(attachments.length > 0) AttachmentEditorComposer(attachmentList: attachments),
 
 
-                  OutlinedButton(
-                      onPressed: () {
-                        addFile(account!.email as String, widget.classRoom.className);
-                        setState(() => {});
-                      },
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Add Attachment",
-                                    style: TextStyle(color: Colors.black87, fontSize: 14)),
-                                Icon(
-                                  Icons.add_circle_outline_outlined,
-                                  color: widget.classRoom.uiColor,
-                                  size: 32,
-                                )
-                              ]
-                          )
-                      )
-                  ),
+             
 
                   SizedBox(height: 20.0),
 
