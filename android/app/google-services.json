@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "517792838857",
+    "project_id": "u-task-notification",
+    "storage_bucket": "u-task-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517792838857:android:98ac20099b8502cc7a8918",
+        "android_client_info": {
+          "package_name": "com.example.online_classroom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNYi_nGsUNi2A-KWgwe3QUW0we8fLkNgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
