@@ -1,5 +1,3 @@
-
-
 import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/data/announcements.dart';
 import 'package:online_classroom/data/attachments.dart';
@@ -14,7 +12,14 @@ class Submission {
   bool submitted = false;
   List attachments;
 
-  Submission({required this.user, this.dateTime = "", required this.classroom, required this.assignment, this.submitted = false, required this.attachments});
+  Submission({
+    required this.user,
+    this.dateTime = "",
+    required this.classroom,
+    required this.assignment,
+    this.submitted = false,
+    required this.attachments,
+  });
 }
 
 List submissionList = [];
@@ -27,38 +32,31 @@ Future<bool> getsubmissionList() async {
   if (jsonList == null) return false;
 
   jsonList.forEach((element) {
-    
     var data = element.data();
-    submissionList.add(
-      Submission(
-        user: getAccount(data["uid"])!,
-        classroom: getClassroom(data["classroom"])!,
-        assignment: getAnnouncement(data["classroom"], data["assignment"])!,
-        dateTime: data["dateTime"],
-        submitted: data["submitted"],
-        attachments : getAttachmentListForStudent(data["uid"],data["classroom"],data["assignment"])
-      )
-    );
+
+    Account? userAccount = getAccount(data["uid"]);
+    ClassRooms? classroom = getClassroom(data["classroom"]);
+    Announcement? assignment = getAnnouncement(data["classroom"], data["assignment"]);
+    List? attachments = getAttachmentListForStudent(data["uid"], data["classroom"], data["assignment"]);
+
+    // Check if any of the values are null and handle them accordingly
+    if (userAccount != null && classroom != null && assignment != null) {
+      submissionList.add(
+        Submission(
+          user: userAccount,
+          classroom: classroom,
+          assignment: assignment,
+          dateTime: data["dateTime"] ?? "",
+          submitted: data["submitted"] ?? false,
+          attachments: attachments ?? [],
+        ),
+      );
+    } else {
+      // Log the issue if necessary
+      print("Skipping a submission due to missing data (userAccount, classroom, or assignment is null).");
+    }
   });
 
   print("\t\t\t\tGot submissions list");
-  // print(submissionList);
   return true;
-  
 }
-
-
-// List<Submission> submissionList = [
-//   Submission(
-//     user: accountList[0],
-//     dateTime: 'Aug 25, 8:40 PM',
-//     classroom: classRoomList[0],
-//     assignment: announcementList[8],
-//     submitted: true
-//   ),
-//   Submission(
-//       user: accountList[1],
-//       classroom: classRoomList[0],
-//       assignment: announcementList[8],
-//   ),
-// ];

@@ -14,17 +14,19 @@ class ClassWork extends StatefulWidget {
 class _ClassWorkState extends State<ClassWork> {
   @override
   Widget build(BuildContext context) {
-    List _classWorkList = announcementList.where((i) => i.type == "Assignment" && i.classroom.className == widget.className).toList();
+    List _classWorkList = announcementList
+        .where((i) =>
+            i.type == "Assignment" && i.classroom.className == widget.className)
+        .toList();
 
     return ListView.builder(
         itemCount: _classWorkList.length,
         itemBuilder: (context, int index) {
           return InkWell(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => AnnouncementPage(
-                announcement: _classWorkList[index]
-              ))),
-            child:  Padding(
+                  builder: (_) =>
+                      AnnouncementPage(announcement: _classWorkList[index]))),
+              child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                   child: Row(
@@ -40,6 +42,12 @@ class _ClassWorkState extends State<ClassWork> {
                           color: Colors.white,
                           size: 30,
                         ),
+                      ),
+                      Divider(
+                        color: const Color.fromARGB(255, 0, 0, 0), // Warna garis
+                        thickness: 1.0, // Ketebalan garis
+                        indent: 0.0, // Jarak dari sisi kiri
+                        endIndent: 0.0, // Jarak dari sisi kanan
                       ),
                       SizedBox(width: 10),
                       Column(
@@ -58,9 +66,7 @@ class _ClassWorkState extends State<ClassWork> {
                     ],
                   ),
                 ),
-            )
-          );
-        }
-    );
+              ));
+        });
   }
 }

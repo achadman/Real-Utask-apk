@@ -39,11 +39,13 @@ class _AddClassState extends State<AddClass> {
           actions: [
             IconButton(
               icon: Icon(
-                Icons.more_vert,
+                Icons.menu,
                 color: Colors.white,
                 size: 26,
               ),
-              onPressed: () {},
+              onPressed: () {
+                
+              },
             )
           ],
         ),

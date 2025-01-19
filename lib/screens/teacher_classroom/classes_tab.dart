@@ -39,6 +39,7 @@ class _ClassesTabState extends State<ClassesTab> {
                     color: _classRoomList[index].uiColor,
                   ),
                 ),
+
                 Container(
                   margin: EdgeInsets.only(top: 30, left: 30),
                   width: 220,

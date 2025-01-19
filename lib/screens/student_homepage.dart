@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:online_classroom/data/accounts.dart';
 import 'package:online_classroom/screens/student_classroom/add_class.dart';
-import 'package:online_classroom/screens/student_classroom/wall_tab.dart';
 import 'package:online_classroom/screens/student_classroom/classes_tab.dart';
 import 'package:online_classroom/screens/student_classroom/timeline_tab.dart';
 import 'package:online_classroom/services/auth.dart';
 import 'package:online_classroom/data/custom_user.dart';
-import 'package:online_classroom/services/classes_db.dart';
-import 'package:online_classroom/services/updatealldata.dart';
 import 'package:provider/provider.dart';
-import 'teacher_classroom/calender_tab.dart';
 
 class StudentHomePage extends StatefulWidget {
   @override
@@ -32,46 +28,60 @@ class _StudentHomePageState extends State<StudentHomePage> {
     var account = getAccount(user!.uid);
 
     final tabs = [
-      WallTab(),
       TimelineTab(),
-      ClassesTab()
+      ClassesTab(),
     ];
 
     return Scaffold(
         appBar: AppBar(
           elevation: 0.5,
-          title: Text(
-            "Online Classroom",
-            style: TextStyle(
-                color: Colors.black, fontFamily: "Roboto", fontSize: 22),
-          ),
           backgroundColor: Colors.white,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text("Welcome, " + (account!.firstName as String),
-                style: TextStyle(color: Colors.black, fontSize: 16),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Dashboard",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "Roboto",
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+              SizedBox(height: 4), // Menambahkan jarak antar teks
+              Text(
+                "Welcome, ${account!.firstName} ${account!.lastName}", // Menggunakan string interpolation
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+          actions: [
             IconButton(
               icon: Icon(
-                Icons.logout,
-                color: Colors.black87,
-                size: 30,
+                Icons.logout_rounded,
+                color: const Color.fromARGB(221, 51, 51, 51),
+                size: 24,
               ),
               onPressed: () async {
                 await _auth.signOut();
               },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.notification_add_rounded,
+                color: const Color.fromARGB(221, 51, 51, 51),
+                size: 24,
+              ),
+              onPressed: () async {},
             ),
           ],
         ),
         body: tabs[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.feed),
-              label: 'Dashboard',
-            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.book),
               label: 'ClassWork',
@@ -81,7 +91,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
               label: "Classes",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.calendar_today),
               label: "Calender",
             )
           ],
@@ -89,20 +99,20 @@ class _StudentHomePageState extends State<StudentHomePage> {
           selectedItemColor: Colors.black,
           onTap: _onItemTapped,
         ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AddClass(),
-              )).then((_) => setState(() {}));
-        },
-        backgroundColor: Colors.blue,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 32,
-        ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                  builder: (context) => AddClass(),
+                ))
+                .then((_) => setState(() {}));
+          },
+          backgroundColor: Colors.blue,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 32,
+          ),
+        ));
   }
 }

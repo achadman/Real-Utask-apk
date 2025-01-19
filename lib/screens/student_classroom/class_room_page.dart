@@ -33,15 +33,9 @@ class _ClassRoomPageState extends State<ClassRoomPage> {
     Color uiColor = widget.uiColor;
 
     final tabs = [
-      StreamTab(
-        className: className,
-        uiColor: uiColor
-      ),
+      StreamTab(className: className, uiColor: uiColor),
       ClassWork(className),
-      PeopleTab(
-          classRoom: widget.classRoom,
-          uiColor: uiColor
-      )
+      PeopleTab(classRoom: widget.classRoom, uiColor: uiColor)
     ];
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +62,7 @@ class _ClassRoomPageState extends State<ClassRoomPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: "Stream",
+            label: "Notifications",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),

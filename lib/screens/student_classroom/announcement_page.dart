@@ -35,6 +35,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                     fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1),
               ),
             ),
+            //garis hijau
             Container(
               margin: EdgeInsets.only(left: 15),
               width: MediaQuery.of(context).size.width - 30,

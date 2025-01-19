@@ -28,73 +28,68 @@ class _ClassRoomPageState extends State<ClassRoomPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      StreamTab(
-        className: widget.classRoom.className,
-        uiColor: widget.uiColor
-      ),
+      StreamTab(className: widget.classRoom.className, uiColor: widget.uiColor),
       ClassWork(widget.classRoom.className),
-      PeopleTab(
-          classRoom: widget.classRoom,
-          uiColor: widget.uiColor
-      ),
-      CalendarTab(
-      )
+      PeopleTab(classRoom: widget.classRoom, uiColor: widget.uiColor),
+      CalendarTab()
     ];
     return Scaffold(
-  appBar: AppBar(
-    backgroundColor: widget.uiColor,
-    elevation: 0.5,
-    title: Text(
-      widget.classRoom.className,
-      style: TextStyle(
-        color: Colors.white,
-        fontFamily: "Roboto",
-        fontSize: 22,
-      ),
-    ),
-    actions: [
-      IconButton(
-        icon: Icon(
-          Icons.more_vert,
-          color: Colors.white,
-          size: 27,
+      appBar: AppBar(
+        backgroundColor: widget.uiColor,
+        elevation: 0.5,
+        title: Text(
+          widget.classRoom.className,
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "Roboto",
+            fontSize: 22,
+          ),
         ),
-        onPressed: () {},
-      )
-    ],
-  ),
-  body: tabs[_selectedIndex],
-  bottomNavigationBar: BottomNavigationBar(
-    items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.chat),
-        label: "Stream",
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.more_vert,
+        //       color: Colors.white,
+        //       size: 27,
+        //     ),
+        //     onPressed: () {},
+        //   )
+        // ],
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.book),
-        label: 'Classwork',
+      body: tabs[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: "Stream",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Classwork',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'People',
+          ),
+          BottomNavigationBarItem(
+            // Tambahkan tab untuk Kalender
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendar',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: widget.uiColor,
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.people),
-        label: 'People',
-      ),
-      BottomNavigationBarItem(
-        // Tambahkan tab untuk Kalender
-        icon: Icon(Icons.calendar_today),
-        label: 'Calendar',
-      ),
-    ],
-    currentIndex: _selectedIndex,
-    selectedItemColor: widget.uiColor,
-    unselectedItemColor: Colors.grey,
-    onTap: _onItemTapped,
-  ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddAnnouncement(classRoom: widget.classRoom),
-            )).then((_) => setState(() {}));
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+                builder: (context) =>
+                    AddAnnouncement(classRoom: widget.classRoom),
+              ))
+              .then((_) => setState(() {}));
         },
         backgroundColor: widget.uiColor,
         child: Icon(

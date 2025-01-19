@@ -22,24 +22,40 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.5,
-        title: Text(
-          "My Classes",
-          style: TextStyle(
-              color: Colors.black, fontFamily: "Roboto", fontSize: 22),
-        ),
-        backgroundColor: Colors.white,
+         title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "My Classes",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "Roboto",
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 4), // Menambahkan jarak antar teks
+              Text(
+                "Welcome, ${account!.firstName} ${account!.lastName}", // Menggunakan string interpolation
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
         actions: [
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 17),
-              child: Text("Welcome, " + (account!.firstName as String),
+              child: Text("Log out",
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
           ),
           IconButton(
             icon: Icon(
-              Icons.logout,
+              Icons.logout_rounded,
               color: Colors.black87,
-              size: 30,
+              size: 24,
             ),
             onPressed: () async {
               await _auth.signOut();
@@ -55,7 +71,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                 builder: (context) => AddClass(),
               )).then((_) => setState(() {}));
         },
-        backgroundColor: const Color.fromARGB(255, 147, 191, 253),
+        backgroundColor: const Color.fromARGB(255, 18, 95, 204),
         child: Icon(
           Icons.add,
           color: Colors.white,

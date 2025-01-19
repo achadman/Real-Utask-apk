@@ -11,6 +11,7 @@ import 'package:online_classroom/widgets/attachment_composer.dart';
 import 'package:online_classroom/screens/teacher_classroom/submission_page.dart';
 import 'package:online_classroom/screens/teacher_classroom/announcement_crud/edit_announcement.dart';
 import 'package:provider/provider.dart';
+import 'package:online_classroom/widgets/submit_composer.dart';
 
 class AnnouncementPage extends StatefulWidget {
   Announcement announcement;
@@ -31,7 +32,22 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
       List submissionsDone = submissionList
           .where((i) => i.assignment == widget.announcement && i.submitted)
           .toList();
+      List<bool> tempChecklist = [];
 
+      @override
+      void initState() {
+        super.initState();
+        submissionsAssigned = submissionList
+            .where((i) => i.assignment == widget.announcement && !i.submitted)
+            .toList();
+
+        // Inisialisasi tempChecklist berdasarkan submitted
+        tempChecklist =
+            submissionsAssigned.map((e) => e.submitted as bool).toList();
+      }
+
+      // Fungsi untuk membangun UI list submissions
+      // Remove redundant buildSubmissions method
       return [
         if (submissionsDone.isNotEmpty)
           Container(
@@ -94,32 +110,50 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
             primary: false,
             itemCount: submissionsAssigned.length,
             itemBuilder: (context, int index) {
-              return StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-                  return CheckboxListTile(
-                    title: Profile(user: submissionsAssigned[index].user),
-                    value: submissionsAssigned[index].submitted,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        submissionsAssigned[index].submitted = value ?? false;
-                        if (value == true) {
-                          // Memindahkan siswa dari Pending ke Submitted
-                          setState(() {
-                            submissionsDone.add(submissionsAssigned[index]);
-                            submissionsAssigned.removeAt(index);
-                          });
-                        }
-                      });
-                    },
-                  );
+              return CheckboxListTile(
+                title: Profile(user: submissionsAssigned[index].user),
+                value: submissionsAssigned[index].submitted,
+                onChanged: (bool? value) {
+                  // Perbarui state untuk item tertentu
+                  setState(() {
+                    submissionsAssigned[index].submitted = value ?? false;
+                  });
                 },
               );
             },
           ),
         ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+          ), // Jarak tombol dari tepi
+          child: ElevatedButton(
+            onPressed: () {
+              // Logika submit
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green, // Warna tombol hijau
+              padding: EdgeInsets.symmetric(
+                  horizontal: 30, vertical: 15), // Ukuran tombol
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(10), // Sudut melengkung tombol
+              ),
+            ),
+            child: Text(
+              'Submit',
+              style:
+                  TextStyle(fontSize: 18, color: Colors.white), // Teks tombol
+            ),
+          ),
+        ),
       ];
     }
     return [];
+  }
+
+  void submitTasks() {
+    // Implement your task submission logic here
   }
 
   @override
@@ -152,13 +186,13 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                       i < widget.announcement.attachments.length;
                       i++) {
                     var attachment = widget.announcement.attachments[i];
-                    String safeURL = attachment.url
-                        .replaceAll(RegExp(r'[^\w\s]+'), '');
-                    AttachmentsDB().deleteAttachmentsDB(
-                        attachment.name, safeURL);
-
+                    String safeURL =
+                        attachment.url.replaceAll(RegExp(r'[^\w\s]+'), '');
                     AttachmentsDB()
-                        .deleteAttachAnnounceDB(widget.announcement.title, safeURL);
+                        .deleteAttachmentsDB(attachment.name, safeURL);
+
+                    AttachmentsDB().deleteAttachAnnounceDB(
+                        widget.announcement.title, safeURL);
                   }
 
                   if (widget.announcement.type == 'Assignment') {
@@ -245,7 +279,8 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                                         Text(
                                           widget.announcement.user.firstName! +
                                               " " +
-                                              widget.announcement.user.lastName!,
+                                              widget
+                                                  .announcement.user.lastName!,
                                           style: TextStyle(),
                                         ),
                                         Text(
@@ -281,37 +316,36 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                   AttachmentComposer(widget.announcement.attachments),
                 ] +
                 buildSubmissions()),
-        floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                        builder: (context) => EditAnnouncement(
-                            announcement: widget.announcement),
-                      ))
-                      .then((_) => setState(() {
-                            widget.announcement = getAnnouncement(
-                                widget.announcement.classroom.className,
-                                widget.announcement.title)!;
-                          }));
-                },
-                backgroundColor: widget.announcement.classroom.uiColor,
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                  size: 32,
-                ),
-                heroTag: null,
-              ),
-              SizedBox(height: 10),
-              FloatingActionButton(
-                onPressed: deleteAnnouncement,
-                backgroundColor: Colors.red,
-                child: Icon(Icons.delete, color: Colors.white, size: 32),
-                heroTag: null,
-              ),
-            ]));
+        floatingActionButton:
+            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                    builder: (context) =>
+                        EditAnnouncement(announcement: widget.announcement),
+                  ))
+                  .then((_) => setState(() {
+                        widget.announcement = getAnnouncement(
+                            widget.announcement.classroom.className,
+                            widget.announcement.title)!;
+                      }));
+            },
+            backgroundColor: widget.announcement.classroom.uiColor,
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 32,
+            ),
+            heroTag: null,
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: deleteAnnouncement,
+            backgroundColor: Colors.red,
+            child: Icon(Icons.delete, color: Colors.white, size: 32),
+            heroTag: null,
+          ),
+        ]));
   }
 }
