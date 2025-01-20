@@ -6,6 +6,7 @@ import 'package:online_classroom/screens/student_classroom/timeline_tab.dart';
 import 'package:online_classroom/services/auth.dart';
 import 'package:online_classroom/data/custom_user.dart';
 import 'package:provider/provider.dart';
+import 'package:online_classroom/screens/teacher_classroom/calender_tab.dart';
 
 class StudentHomePage extends StatefulWidget {
   @override
@@ -30,6 +31,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
     final tabs = [
       TimelineTab(),
       ClassesTab(),
+      CalendarTab()
     ];
 
     return Scaffold(
